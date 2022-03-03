@@ -1,38 +1,52 @@
-.App {
-  text-align: center;
+@import url(~ress/ress.css);
+
+body {
+  font-family: YuGothic, YuGothicM, 'Hiragino Kaku Gothic ProN',
+    'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  min-width: 320px;
+  margin: 0 auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+a {
+  color: #000000;
+  text-decoration: none;
 }
 
-.App-header {
-  background-color: #282c34;
+main {
+  position: relative;
+  background: linear-gradient(to bottom, #97ff97 0%, #00ec00 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.app_title {
+  display: block;
+  width: 210px;
+  max-width: 80%;
+  margin: 0 auto 3em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app_trigger {
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: block;
+  margin: 0 auto;
+  border: 0;
+  color: #fff;
+  outline: 0;
+}
+
+.app_trigger:active,
+.app_trigger:hover {
+  border-bottom: 1px solid #fff;
 }
