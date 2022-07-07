@@ -1,79 +1,68 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import ReactModal from 'react-modal';
 import TalkOfDay from '../talkofday/talkofday';
 import './talk.css';
 import { getMembers } from '../../member';
 import speaker from '../../speaker.svg';
 
-export default class Talk extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      myName: '',
-      isShowModal: true,
-    };
-  }
+const Talk = (props) => {
+  const [myName, setMyName] = useState(null);
+  const [isShowModal, setIsShowModal] = useState(true)
 
-  openModal() {
-    this.setState({ isShowModal: true });
-  }
-
-  closeModal() {
-    this.setState({ isShowModal: false });
-  }
-
-  render() {
-    return (
-      <div className="talk">
-        {this.state.isShowModal ? (
-          <ReactModal
-            isOpen={this.state.isShowModal}
-            contentLabel="自分の名前を選択してください"
-            onRequestClose={() => {
-              this.closeModal();
-            }}
-            ariaHideApp={false}
-            shouldCloseOnOverlayClick={this.state.myName !== ''}
-            className="modalContent"
-          >
-            <p className="question">自分の名前を選択してください</p>
-            <ul className="memberList">
-              {getMembers(this.props.talks).map(member => {
-                return (
-                  <li
-                    className="member"
-                    onClick={() => {
-                      this.setState({ myName: member, isShowModal: false });
-                    }}
-                  >
-                    {member}
-                  </li>
-                );
-              })}
-            </ul>
-          </ReactModal>
-        ) : null}
-        <header className="talk_header">
-          <h1 className="talk_title">{this.props.title}</h1>
-          <button
-            className="talk_speaker"
-            onClick={() => {
-              this.openModal();
-            }}
-          >
-            <img src={speaker} alt="" />
-          </button>
-        </header>
-        {this.props.talks.map(talk => {
-          return (
-            <TalkOfDay
-              date={talk.date}
-              talksOfDay={talk.talksOfDay}
-              my={this.state.myName}
-            />
-          );
-        })}
-      </div>
-    );
-  }
+  return (
+    <div className="talk">
+      {isShowModal ? (
+        <ReactModal
+          isOpen={isShowModal}
+          contentLabel="自分の名前を選択してください"
+          onRequestClose={() => {
+            setIsShowModal(false);
+          }}
+          ariaHideApp={false}
+          shouldCloseOnOverlayClick={myName !== null}
+          className="modalContent"
+        >
+          <p className="question">自分の名前を選択してください</p>
+          <ul className="memberList">
+            {
+            getMembers(props.talks).map(member => {
+              return (
+                <li
+                  className="member"
+                  onClick={() => {
+                    setMyName(member);
+                    setIsShowModal(false);
+                  }}
+                >
+                  {member}
+                </li>
+              );
+            })}
+          </ul>
+        </ReactModal>
+      ) : null}
+      <header className="talk_header">
+        <h1 className="talk_title">{props.title}</h1>
+        <button
+          className="talk_speaker"
+          onClick={() => {
+            setIsShowModal(true);
+          }}
+        >
+          <img src={speaker} alt="" />
+        </button>
+      </header>
+      {props.talks.map(talk => {
+        return (
+          <TalkOfDay
+            date={talk.date}
+            talksOfDay={talk.talksOfDay}
+            my={myName}
+          />
+        );
+      })}
+    </div>
+  );
 }
+
+export default Talk;

@@ -1,45 +1,39 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './FileSelect.css';
 
-export default class FileSelect extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fileName: '',
-    };
-  }
+const FileSelect = (props) => {
+  const [fileName, setFileName] = useState(null);
 
-  handleChangeFile(e) {
+  const handleChangeFile = (e) => {
     const target = e.target;
     const file = target.files.item(0);
 
     if (!file) {
-      this.setState({ fileName: '' });
+      setFileName(null)
       return;
     }
 
-    this.setState({ fileName: file.name });
+    setFileName(file.name);
     const fileReader = new FileReader();
     fileReader.onload = () => {
-      this.props.onSelected(file.name, fileReader.result);
+      props.onSelected(file.name, fileReader.result);
     };
     fileReader.readAsText(file);
   }
 
-  render() {
-    return (
-      <label>
-        ファイルを選択
-        <input
-          type="file"
-          onChange={e => {
-            this.handleChangeFile(e);
-          }}
-        />
-        {this.state.fileName ? (
-          <p className="fileName">{this.state.fileName}</p>
-        ) : null}
-      </label>
-    );
-  }
+
+  return (
+    <label>
+      ファイルを選択
+      <input
+        type="file"
+        onChange={e => handleChangeFile(e)}
+      />
+      {fileName ? (
+        <p className="fileName">{fileName}</p>
+      ) : null}
+    </label>
+  );
 }
+
+export default FileSelect;
