@@ -4,7 +4,7 @@ export const getMembers = parsedTalk => {
   parsedTalk.forEach(talk => {
     
     // membersにtalksOfDay単位のメンバー名を追記する
-    members.push(...talk.talksOfDay.map(t => t.user));
+    members.push(...talk.talksOfDay.filter(t => !t.announce).map(t => t.user));
   });
 
   return [...new Set(members)];

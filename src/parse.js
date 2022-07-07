@@ -5,6 +5,7 @@ const parseLineTalk = talkText => {
   // const empty = /^\n$/;
   const datePattern = /^(20\d{2}[/|.]\d{2}[/|.]\d{2})\s?\(?[月火水木金土日](曜日)?\)?$/;
   const talkPattern = /^(\d{2}:\d{2})\t(.*)\t(.*)$/;
+  const deleteMessagePattern = /^(\d{2}:\d{2})\t{2}(メッセージの送信を取り消しました)$/
 
   const talkData = {};
 
@@ -15,11 +16,20 @@ const parseLineTalk = talkText => {
   talkArray.forEach((value, index) => {
     const dateMatched = value.match(datePattern);
     const talkMatched = value.match(talkPattern);
+    const deleteMessageMatched = value.match(deleteMessagePattern);
+
     // 日付
     if (dateMatched) {
       // console.log('日付' + dateMatched[1]);
       datePoint = dateMatched[1];
       talkData[datePoint] = [];
+    }
+    // 削除されたメッセージ
+    else if (deleteMessageMatched) {
+      talkIndex = talkData[datePoint].push({
+        time: deleteMessageMatched[1],
+        announce: deleteMessageMatched[2],
+      });
     }
     // 時間から始まるトーク
     else if (talkMatched) {
@@ -51,6 +61,7 @@ const parseLineTalk = talkText => {
     }
   });
 
+  // console.log(talkData);
   return Object.entries(talkData).map(([date, talksOfDay]) => ({
     date: date,
     talksOfDay: talksOfDay,
