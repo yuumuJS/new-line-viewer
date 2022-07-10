@@ -2,7 +2,13 @@ import React from 'react';
 import Balloon from '../balloon/balloon';
 import './talkofday.css';
 
-const TalkOfDay = (props) => {
+type Props = {
+  date: string,
+  talksOfDay: Array<any>,
+  my: string | null,
+}
+
+const TalkOfDay = (props: Props) => {
   return (
     <div className="talkOfDay">
       <h2>{props.date}</h2>

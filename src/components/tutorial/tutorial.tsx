@@ -26,9 +26,7 @@ const Tutorial = () => {
         overlayClassName="tutorial_overlay"
         ariaHideApp={false}
         shouldCloseOnOverlayClick={false}
-        onRequestClose={() => {
-          this.closeModal();
-        }}
+        onRequestClose={() => setIsShowModal(false)}
       >
         <button
           className="tutorial_close"

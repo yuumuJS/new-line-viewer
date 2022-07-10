@@ -1,7 +1,14 @@
 import React from 'react';
 import './balloon.css';
 
-const Balloon = (props) => {
+type Props = {
+  myTalk: boolean,
+  user: string,
+  text: string,
+  time: string,
+}
+
+const Balloon = (props: Props) => {
   return (
     <div className={`balloon ${props.myTalk ? 'right' : 'left'}`}>
       <p className="user">{props.user}</p>

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import './FileSelect.css';
 
-const FileSelect = (props) => {
+type Props = {
+  onSelected: any
+}
+
+const FileSelect = (props: Props) => {
   const [fileName, setFileName] = useState(null);
 
-  const handleChangeFile = (e) => {
+  const handleChangeFile = (e: any) => {
     const target = e.target;
     const file = target.files.item(0);
 

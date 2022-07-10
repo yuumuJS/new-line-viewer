@@ -5,7 +5,12 @@ import './talk.css';
 import { getMembers } from '../../member';
 import speaker from '../../speaker.svg';
 
-const Talk = (props) => {
+type Props = {
+  title: string,
+  talks: Array<any>,
+}
+
+const Talk = (props: Props) => {
   const [myName, setMyName] = useState(null);
   const [isShowModal, setIsShowModal] = useState(true)
 

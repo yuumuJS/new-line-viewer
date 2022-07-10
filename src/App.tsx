@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { SetStateAction, useState } from 'react';
 import { parseLineTalk } from './parse';
-import { BrowserRouter, Route, Link, Navigate, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Routes } from 'react-router-dom';
 import Talk from './components/talk/talk';
 import FileSelect from './components/file_select/FileSelect';
 import Tutorial from './components/tutorial/tutorial';
 import './app.css';
 import logo from './logo.svg';
 
-function App() {
+const App = () => {
   const [fileName, setFileName] = useState('');
   const [talkText, setTalkText] = useState('');
 
@@ -15,7 +15,6 @@ function App() {
     <BrowserRouter>
         <Routes>
           <Route
-            exact
             path="/"
             element={
               <main className="title">
@@ -24,7 +23,7 @@ function App() {
                 </h1>
                 <Tutorial />
                 <FileSelect
-                  onSelected={(title, content) => {
+                  onSelected={(title: SetStateAction<string>, content: SetStateAction<string>) => {
                     setFileName(title);
                     setTalkText(content);
                   }}
@@ -38,14 +37,12 @@ function App() {
             }
           />
           <Route
-            exact
             path="/talkroom"
             element={
-              
-                <Talk
-                  title={fileName}
-                  talks={parseLineTalk(talkText)}
-                />
+              <Talk
+                title={fileName}
+                talks={parseLineTalk(talkText)}
+              />
             }
           />
         </Routes>
